@@ -103,10 +103,9 @@ def annotate_steps(args):
         print('length', len(dataset))
         questions = [data['question'] for data in dataset]
     else:
-        path = '/path/to/MATH500.jsonl'
-        with open(path) as f:
-            dataset = [json.loads(line) for line in f]
-        questions = [d['problem'] for d in dataset]
+        dataset = load_dataset('HuggingFaceH4/MATH-500')['test']
+        print('length', len(dataset))
+        questions = [data['problem'] for data in dataset]
 
     prompts = [template.replace('{question}', question) for question in questions]
 
@@ -132,12 +131,12 @@ if __name__ == "__main__":
     # import deepspeed
     import os
     parser = argparse.ArgumentParser()
-    parser.add_argument("--tokenizer_path", type=str, default="meta-llama/Meta-Llama-3-70B-Instruct")
-    parser.add_argument("--model-path", type=str, default="meta-llama/Meta-Llama-3-70B-Instruct")
-    parser.add_argument("--model-name", type=str, default="Llama-3-70B-Instruct")
+    parser.add_argument("--tokenizer_path", type=str, default="Qwen/Qwen2.5-Math-7B-Instruct")
+    parser.add_argument("--model-path", type=str, default="Qwen/Qwen2.5-Math-7B-Instruct")
+    parser.add_argument("--model-name", type=str, default="Qwen/Qwen2.5-Math-7B-Instruct")
     parser.add_argument("--dataset", type=str, default="math")
-    parser.add_argument("--save-path", type=str, default="/path/to/save.json")
-    parser.add_argument("--repeat-num", type=int, default=128)
+    parser.add_argument("--save-path", type=str, default="Qwen2.5-Math-7b-Instruct_16.json")
+    parser.add_argument("--repeat-num", type=int, default=16)
     parser.add_argument("--local_rank", type=int, default=0)
     args = parser.parse_args()
     print(args)
