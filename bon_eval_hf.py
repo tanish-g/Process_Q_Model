@@ -74,9 +74,7 @@ def compute_metrics(dataset_name, scored_results):
     if dataset_name == 'gsm8k':
         original_dataset = load_dataset('qintongli/GSM-Plus')['testmini']
     else:
-        path = './MATH500.jsonl'
-        with open(path) as f:
-            original_dataset = [json.loads(line) for line in f]
+        original_dataset = load_dataset('HuggingFaceH4/MATH-500')['test']
 
     for n in sample_nums:
         splitted_completions = split_query(scored_results, n, max(sample_nums))
@@ -256,9 +254,7 @@ if __name__=='__main__':
         ]
         queries = []
         cur_queries = []
-        path = './MATH500.jsonl'
-        with open(path) as f:
-            origin_dataset = [json.loads(line) for line in f]
+        origin_dataset = load_dataset('HuggingFaceH4/MATH-500')['test']
         for file_name in file_list:
             cur_data = json.load(open(file_name))
             if len(cur_queries) == len(cur_data):
